@@ -60,17 +60,13 @@ struct ContentView: View {
                             .frame(width: 0, height: 0)
                             .allowsHitTesting(false)
 
-                        VStack(spacing: 12) {
+                        VStack {
                             Spacer()
 
-                            ControlSlider(
-                                leadingSystemName: "minus.magnifyingglass",
-                                trailingSystemName: "plus.magnifyingglass",
-                                value: $cameraZoom,
-                                range: 1.0...3.0
+                            MirrorControlBar(
+                                lightIsOn: $lightIsOn,
+                                cameraZoom: $cameraZoom
                             )
-
-                            LightToggleControl(isOn: $lightIsOn)
                         }
                         .padding(.horizontal, 28)
                         .padding(.bottom, 18)
@@ -94,6 +90,27 @@ struct ContentView: View {
     }
 }
 
+private struct MirrorControlBar: View {
+    @Binding var lightIsOn: Bool
+    @Binding var cameraZoom: Double
+
+    var body: some View {
+        HStack(spacing: 14) {
+            LightButton(isOn: $lightIsOn)
+
+            ControlSlider(
+                leadingSystemName: "minus.magnifyingglass",
+                trailingSystemName: "plus.magnifyingglass",
+                value: $cameraZoom,
+                range: 1.0...3.0
+            )
+        }
+        .padding(.horizontal, 14)
+        .padding(.vertical, 10)
+        .background(.black.opacity(0.35), in: Capsule())
+    }
+}
+
 private struct ControlSlider: View {
     let leadingSystemName: String
     let trailingSystemName: String
@@ -113,29 +130,24 @@ private struct ControlSlider: View {
                 .foregroundStyle(.white)
                 .frame(width: 24)
         }
-        .padding(.horizontal, 18)
-        .padding(.vertical, 12)
-        .background(.black.opacity(0.35), in: Capsule())
     }
 }
 
-private struct LightToggleControl: View {
+private struct LightButton: View {
     @Binding var isOn: Bool
 
     var body: some View {
-        HStack(spacing: 12) {
+        Button {
+            isOn.toggle()
+        } label: {
             Image(systemName: isOn ? "sun.max.fill" : "sun.min.fill")
                 .foregroundStyle(.white)
-                .frame(width: 24)
-
-            Toggle("", isOn: $isOn)
-                .labelsHidden()
-                .toggleStyle(.switch)
-                .tint(.white)
+                .frame(width: 44, height: 44)
+                .background(isOn ? .white.opacity(0.24) : .white.opacity(0.1), in: Circle())
         }
-        .padding(.horizontal, 18)
-        .padding(.vertical, 10)
-        .background(.black.opacity(0.35), in: Capsule())
+        .buttonStyle(.plain)
+        .accessibilityLabel("Mirror light")
+        .accessibilityValue(isOn ? "On" : "Off")
     }
 }
 
