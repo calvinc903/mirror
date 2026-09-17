@@ -34,10 +34,6 @@ struct ContentView: View {
             case .authorized:
                 GeometryReader { geometry in
                     let lightBarThickness = lightIsOn ? lightThickness(for: geometry.size) : 0
-                    let cameraSize = CGSize(
-                        width: max(geometry.size.width - lightBarThickness * 2, 1),
-                        height: max(geometry.size.height - lightBarThickness * 2, 1)
-                    )
 
                     ZStack {
                         if lightIsOn {
@@ -46,11 +42,9 @@ struct ContentView: View {
                         }
 
                         SelfieCameraView()
-                            .frame(width: cameraSize.width, height: cameraSize.height)
+                            .ignoresSafeArea()
                             .scaleEffect(cameraZoom)
                             .clipped()
-                            .position(x: geometry.size.width / 2, y: geometry.size.height / 2)
-                            .animation(.easeInOut(duration: 0.2), value: lightBarThickness)
 
                         MirrorLightOverlay(isOn: lightIsOn, thickness: lightBarThickness)
                             .ignoresSafeArea()
@@ -138,12 +132,13 @@ private struct LightButton: View {
 
     var body: some View {
         Button {
+            UIImpactFeedbackGenerator(style: .light).impactOccurred()
             isOn.toggle()
         } label: {
             Image(systemName: isOn ? "sun.max.fill" : "sun.min.fill")
-                .foregroundStyle(.white)
+                .foregroundStyle(isOn ? .yellow : .white)
                 .frame(width: 44, height: 44)
-                .background(isOn ? .white.opacity(0.24) : .white.opacity(0.1), in: Circle())
+                .background(isOn ? .yellow.opacity(0.24) : .white.opacity(0.1), in: Circle())
         }
         .buttonStyle(.plain)
         .accessibilityLabel("Mirror light")
