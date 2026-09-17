@@ -66,6 +66,7 @@ struct ContentView: View {
                         .padding(.bottom, 18)
                     }
                 }
+                .ignoresSafeArea()
             case .denied:
                 Text("Camera access is needed to use Mirror.")
                     .font(.body)
