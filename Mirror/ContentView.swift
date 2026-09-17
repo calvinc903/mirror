@@ -153,7 +153,7 @@ private struct MirrorLightOverlay: View {
 
     var body: some View {
         if isOn {
-            RoundedRectangle(cornerRadius: thickness * 0.55, style: .continuous)
+            RoundedRectangle(cornerRadius: thickness * 1.8, style: .continuous)
                 .strokeBorder(.white, lineWidth: thickness)
                 .animation(.easeInOut(duration: 0.2), value: isOn)
         }
