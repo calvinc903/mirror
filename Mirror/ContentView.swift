@@ -153,9 +153,22 @@ private struct MirrorLightOverlay: View {
 
     var body: some View {
         if isOn {
-            RoundedRectangle(cornerRadius: thickness * 1.8, style: .continuous)
-                .strokeBorder(.white, lineWidth: thickness)
+            GeometryReader { geometry in
+                let innerCornerRadius = thickness * 1.8
+
+                ZStack {
+                    RoundedRectangle(cornerRadius: innerCornerRadius, style: .continuous)
+                        .fill(.white)
+
+                    RoundedRectangle(cornerRadius: innerCornerRadius, style: .continuous)
+                        .fill(.clear)
+                        .padding(thickness)
+                        .blendMode(.destinationOut)
+                }
+                .compositingGroup()
+                .frame(width: geometry.size.width, height: geometry.size.height)
                 .animation(.easeInOut(duration: 0.2), value: isOn)
+            }
         }
     }
 }
