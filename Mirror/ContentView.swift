@@ -36,11 +36,6 @@ struct ContentView: View {
                     let lightBarThickness = lightIsOn ? lightThickness(for: geometry.size) : 0
 
                     ZStack {
-                        if lightIsOn {
-                            Color.white
-                                .ignoresSafeArea()
-                        }
-
                         SelfieCameraView()
                             .ignoresSafeArea()
                             .scaleEffect(cameraZoom)
@@ -155,18 +150,17 @@ private struct MirrorLightOverlay: View {
         if isOn {
             GeometryReader { geometry in
                 let innerCornerRadius = thickness * 1.8
+                let bounds = CGRect(origin: .zero, size: geometry.size)
+                let innerBounds = bounds.insetBy(dx: thickness, dy: thickness)
 
-                ZStack {
-                    RoundedRectangle(cornerRadius: innerCornerRadius, style: .continuous)
-                        .fill(.white)
-
-                    RoundedRectangle(cornerRadius: innerCornerRadius, style: .continuous)
-                        .fill(.clear)
-                        .padding(thickness)
-                        .blendMode(.destinationOut)
+                Path { path in
+                    path.addRect(bounds)
+                    path.addRoundedRect(
+                        in: innerBounds,
+                        cornerSize: CGSize(width: innerCornerRadius, height: innerCornerRadius)
+                    )
                 }
-                .compositingGroup()
-                .frame(width: geometry.size.width, height: geometry.size.height)
+                .fill(.white, style: FillStyle(eoFill: true))
                 .animation(.easeInOut(duration: 0.2), value: isOn)
             }
         }
