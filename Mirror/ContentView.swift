@@ -149,7 +149,7 @@ private struct MirrorLightOverlay: View {
     var body: some View {
         if isOn {
             GeometryReader { geometry in
-                let innerCornerRadius = thickness * 1.8
+                let innerCornerRadius = thickness * 0.9
                 let bounds = CGRect(origin: .zero, size: geometry.size)
                 let innerBounds = bounds.insetBy(dx: thickness, dy: thickness)
 
