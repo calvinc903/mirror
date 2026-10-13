@@ -1,5 +1,9 @@
 """Focused safety checks for candidate-bound app-test receipts."""
 from pathlib import Path
+from contextlib import redirect_stdout
+import io
+import json
+import subprocess
 import sys
 import tempfile
 import unittest
@@ -38,6 +42,24 @@ class TestReceiptInputs(unittest.TestCase):
                 test_ios.main()
             self.assertEqual(raised.exception.code, 2)
             create_output.assert_not_called()
+
+    def test_missing_results_bundle_cannot_qualify_success(self):
+        with tempfile.TemporaryDirectory() as directory:
+            output = Path(directory) / "output"
+            def capture(argv):
+                return "Xcode 27.0\nBuild version fixture" if argv == ["xcodebuild", "-version"] else "fixture"
+            with (
+                patch.object(test_ios, "test_manifest", return_value={"app": "hash"}),
+                patch.object(test_ios, "capture", side_effect=capture),
+                patch.object(test_ios.subprocess, "run", return_value=subprocess.CompletedProcess([], 0)),
+                patch.object(sys, "argv", ["test_ios.py", "--destination", "platform=iOS Simulator,id=fixture", "--output", str(output)]),
+                redirect_stdout(io.StringIO()),
+            ):
+                code = test_ios.main()
+            receipt = json.loads((output / "receipt.json").read_text())
+            self.assertEqual(code, 2)
+            self.assertEqual(receipt["xcodebuild_exit_code"], 0)
+            self.assertIn("without a test results bundle", receipt["error"])
 
 
 if __name__ == "__main__":

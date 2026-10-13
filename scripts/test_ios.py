@@ -52,6 +52,10 @@ def main():
             "-resultBundlePath", str(output / "tests.xcresult"), "-parallel-testing-enabled", "NO"]
     if args.build_only or "Simulator" in destination:
         argv.append("CODE_SIGNING_ALLOWED=NO")
+    # @testable requires this only for the test invocation. Shipping Release
+    # archives keep the project's default, without testability enabled.
+    if args.configuration == "Release":
+        argv.append("ENABLE_TESTABILITY=YES")
     argv.extend(f"-only-testing:{selection}" for selection in args.only_testing)
     argv.append(action)
     before = test_manifest()
@@ -75,6 +79,8 @@ def main():
             log.flush()
             code = subprocess.run(argv, cwd=ROOT, stdout=log, stderr=subprocess.STDOUT).returncode
             receipt["xcodebuild_exit_code"] = code
+            if not args.build_only and code == 0 and not (output / "tests.xcresult").exists():
+                raise RuntimeError("xcodebuild reported success without a test results bundle")
             if not args.build_only and (output / "tests.xcresult").exists():
                 summary = json.loads(capture(["xcrun", "xcresulttool", "get", "test-results", "summary",
                                               "--path", str(output / "tests.xcresult"), "--compact"]))
