@@ -17,3 +17,5 @@ Use `python3 scripts/check_agent_system.py` and `python3 -m unittest discover -s
 - Consult and update existing procedures, status, known issues and decisions after substantive changes.
 - Use reproducible, versioned inputs and outputs, verified upgrades, resumability and rollback where useful.
 - Leave an honest handoff: implemented/tested work, uncertainty and the next unfinished step. Distinguish local, committed, pushed and published state; prefer executable checks to conversational memory.
+
+Temporary qualification control: {{project}}
