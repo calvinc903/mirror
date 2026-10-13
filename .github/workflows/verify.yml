@@ -42,8 +42,8 @@ jobs:
           set -euo pipefail
           qa_device=$(xcrun simctl create "Mirror CI ${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}" com.apple.CoreSimulator.SimDeviceType.iPhone-18-Pro com.apple.CoreSimulator.SimRuntime.iOS-27-0)
           trap 'xcrun simctl shutdown "$qa_device" >/dev/null 2>&1 || true; xcrun simctl delete "$qa_device"' EXIT
-          xcrun simctl boot "$qa_device"
-          xcrun simctl bootstatus "$qa_device" -b
+          # Capture bounded toolchain metadata before simulator startup competes
+          # for runner resources; xcodebuild test prepares this leased destination.
           python3 scripts/test_ios.py --destination "platform=iOS Simulator,id=$qa_device" --only-testing MirrorTests --output "${{ runner.temp }}/mirror-ios-tests"
       - name: Retain build evidence
         if: always()
