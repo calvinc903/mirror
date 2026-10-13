@@ -89,8 +89,27 @@ import XCTest
         let center = NotificationCenter()
         let driver = CameraSessionDriver(notificationCenter: center)
         let controller = CameraController(permission: AuthorizedPermission(), session: driver)
+        defer {
+            controller.teardown()
+            controller.previewVisibilityHandler = nil
+        }
+        let startup = expectation(description: "Real capture-session startup reached a terminal state")
+        var startupCompleted = false
+        controller.previewVisibilityHandler = { _ in
+            switch controller.state {
+            case .running, .unavailable, .failed:
+                guard !startupCompleted else { return }
+                startupCompleted = true
+                startup.fulfill()
+            default: break
+            }
+        }
         controller.setActive(true)
-        await eventually { controller.state != .starting }
+        // Cold hosted AVFoundation setup exceeded the notification-delivery budget.
+        // This watchdog bounds setup only; the actual terminal callback releases
+        // the barrier immediately, after receive() has finished any startup stop.
+        await fulfillment(of: [startup], timeout: 30)
+        guard startupCompleted else { return }
         var observedInterruption = false
         controller.previewVisibilityHandler = { _ in
             if controller.state == .interrupted {
@@ -104,8 +123,6 @@ import XCTest
         await eventually { observedInterruption }
         await eventually { controller.state != .interrupted }
         XCTAssertTrue(controller.isActive)
-        controller.teardown()
-        controller.previewVisibilityHandler = nil
     }
 
     private func settle() async {
