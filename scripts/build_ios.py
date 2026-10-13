@@ -54,7 +54,7 @@ def main():
         output = Path(tempfile.mkdtemp(prefix="ios-build-", dir=parent)).resolve()
     print(f"Build artifacts: {output}", flush=True)
     argv = [
-        "xcodebuild", "-project", "Mirror.xcodeproj", "-scheme", "Mirror",
+        "xcodebuild", "-project", "Mirror.xcodeproj", "-scheme", "MirrorFailureControl",
         "-sdk", "iphonesimulator", "-destination", "generic/platform=iOS Simulator",
         "-configuration", args.configuration,
         "-derivedDataPath", str(output / "DerivedData"),
