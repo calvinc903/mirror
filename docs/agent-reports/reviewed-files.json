@@ -1,0 +1,31 @@
+{
+  "reviewed_commit": "56032c2f50d858a2b1e856d6e7c3b822cd01adf9",
+  "reviewed_tree": "fa778e7e12497444e2ce225619c5704c4b857691",
+  "source_digest": "870998da3ae02ded17b84494c233b3987f53c9c0849c12e852ec053994dd9425",
+  "files_sha256": {
+    ".github/workflows/verify.yml": "d39522f3f3da4a64e603a3aa86b814a3a075f8a0a1f9f2b2f0544d0a27560655",
+    ".gitignore": "9c9f5fadff688cc07f4d2550f54763dee13b58d217e64affd242fa76ac5cb8e6",
+    "AGENTS.md": "02dd9cea1bbe7c36e558bf9243023ec1f829fc975a3c7beac187b3e388da0477",
+    "Mirror.xcodeproj/xcshareddata/xcschemes/Mirror.xcscheme": "dc25446577e2beea8ae09b8965a5ec5ebf1bcbcbd3dd4a56bc45f8f2ab276051",
+    "README.md": "c49eb73699f48a8399183f311832f6b3a6e9205a2126c0f28af49db90bc4ddd4",
+    "adversarial_agent.md": "4d4535a39424975cd8659dbbd3c1b60abf22552f0fe35edb6327b06682bbbaad",
+    "docs/ACCEPTANCE_STATUS.md": "e935b506b4acdb0fdf6d53f128444367315c2448312d3e446af3db02a63dabb4",
+    "docs/BACKLOG.md": "268f4f84fde8738d6ab947bdbb5495583df6ef1fa1ef78ad967041ec99e5c771",
+    "docs/BRANCH_WORKFLOW.md": "6c253811d501bcde017ea96a18edd87ec29c9c823292ef11d958ee9f94c2a304",
+    "docs/DELEGATION_FRAMEWORK.md": "81189226d476589c5b9c6473da3b69170a3500bcbb1a3ead1e0988ea50442475",
+    "docs/DEVELOPMENT_WORKFLOW.md": "c4a516f5a6a78cb2909e3bd1a710699ed74c3358798bdbc992d9dbee986522e0",
+    "docs/DEVICE_CHECKLIST.md": "691484e0377a6c18e59024baa5ee8ebfe6b0cd0ccc8fa36da61f65d3d87395f1",
+    "docs/FEEDBACK_LOOP.md": "cfd03be873a64802ec8bc8041cb151e75ae6504893d840bc4fa62cf744665603",
+    "docs/PROJECT_PLAN.md": "d8e1e59f8c35097fcb14ed64438f7cb36201085dfd3abeba15807c92437317a8",
+    "docs/PROJECT_STATUS.md": "d21e2278797ac5bfb3aab91303be4ea0dafb0d5bfe2cc173ece11ff42d5fed46",
+    "docs/UI_REFERENCES.md": "be21624e854c7b9db1b42f0209dd3761a5bad6abfe19a9ba950763a53c7a6327",
+    "docs/agent-reports/agent-system-setup.md": "54b65138abb9abfa967efb226420ace0c0878c89666e125da5e1eb4ea7be3334",
+    "docs/agent-reports/task-report-template.md": "52aaaf79087fa7ebf4c96ac913231c33633d9b3dee213afc7c5d2b5b1a6dfb13",
+    "main_agent.md": "8e08120dcd4508b7883cbf88a9250ba90e6ae626061b01d988c7764a87b6f421",
+    "scripts/build_ios.py": "6a1a8aef20bd8071d878ba647043033befae96d1859193f2f0e85b1b46a4fd66",
+    "scripts/check_agent_system.py": "45f5d542bd3622f755816dad9dad9f66ffeea5971041fed629ce47d700f3483e",
+    "scripts/tests/test_agent_system.py": "ac1f7174cbb4d413a06a79d84d3defa2ab0adc73da1c1fb14d7f996b0b1c6975",
+    "scripts/tests/test_build_ios.py": "064711bb26a409fd4b665a2852aa62c1f09489071ca5098ea0b8c7fa094d9ebc",
+    "sub_agent.md": "90a7b090a08cb109e9105993347e527c0d774003b213141b2925ac3decd076c7"
+  }
+}

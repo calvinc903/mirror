@@ -16,6 +16,26 @@ Official runner source: [GitHub runner-images Xcode 27 announcement](https://git
 
 ## Candidate evidence and disposition
 
-Implementation review, candidate build, hosted controls, PR publication and effective rules: Pending. Coordinator owns next actions in [acceptance](../ACCEPTANCE_STATUS.md).
+Implementation review passed at `56032c2f50d858a2b1e856d6e7c3b822cd01adf9` in the distinct registered reviewer worktree. One P2 was found and resolved: a post-build manifest exception after successful Xcode execution could retain exit 0. The handler now fails with exit 2; four build-gate regression controls cover that failure, changed source, Xcode failure propagation and unchanged success. Independent re-review found no remaining material findings; all seventeen documents and eleven regressions passed. Model/effort: Sol 6.1 medium. Reviewer made no edits or external mutations.
+
+The control/restoration commit `a875a07120819ca0e829b737adc3aca127f21492` has the exact reviewed tree `fa778e7e12497444e2ce225619c5704c4b857691`; `git diff 56032c2..a875a07 --exit-code` passed. [Reviewed input manifest](reviewed-files.json) retains hashes before the supplemental status/receipt updates; those documentation updates receive a checkpoint audit and fresh link checks.
+
+## Hosted positive and negative controls
+
+- [Restored positive PR run 38342271037](https://github.com/calvinc903/mirror/actions/runs/38342271037): both checks succeeded. PR head `a875a07120819ca0e829b737adc3aca127f21492`; actual merge checkout/event `3427c6e68dbbf1e859ce4a7fa636b6058d5bec33`; checkout tree equals the reviewed tree. Source digest `870998da3ae02ded17b84494c233b3987f53c9c0849c12e852ec053994dd9425`. Workflow SHA-256 `d39522f3f3da4a64e603a3aa86b814a3a075f8a0a1f9f2b2f0544d0a27560655`. [Receipt](restored-build-receipt.json).
+- [Documentation negative PR run 38342068840](https://github.com/calvinc903/mirror/actions/runs/38342068840): unresolved template parameter at head `a764525c5d59ede06f844ec08ddc9039324ae9d8` failed `agent-system`, while `ios-build` succeeded.
+- [Build negative PR run 38342237037](https://github.com/calvinc903/mirror/actions/runs/38342237037): nonexistent scheme at head `201591e05a0ed7308e3a5f665fd2689829373cf2` failed `ios-build` with Xcode/wrapper exit 65, while `agent-system` succeeded. Actual merge checkout `6e6618e38c213f1a6e1530a0a4d0be875477d083`. [Receipt](negative-build-receipt.json).
+
+[Control/job/check-app receipts](ci-controls.json) show actual runner labels Ubuntu 24.04 and xcode-27, with both contexts produced by GitHub Actions app 15368. The positive receipt records Xcode 27.0 (27A266a), Simulator SDK 27.0 and unchanged source inputs. Build logs and result bundles are attached as workflow artifacts, with thirty-day retention; source-bound receipts and links are committed here. Local raw evidence remains under `/private/tmp/mirror-setup-evidence/` and is not a durable backup.
+
+One attempted negative control changed scheme target references; Xcode still compiled successfully, so it did not qualify failure propagation. Its raw local receipt is retained as `scheme-failure-control/receipt.json`; the scheme was restored and the nonexistent scheme-name control established the failure path. No workaround or product repair resulted.
+
+## Effective protection and publication
+
+[Draft PR #1](https://github.com/calvinc903/mirror/pull/1) is the pushed setup checkpoint. No merge or App Store release occurred. Main now requires PRs, applies the rule to administrators, disallows force pushes/deletion and requires conversation resolution. Zero human approvals is deliberate for the solo author; independent agent review remains a separate local gate.
+
+[Before rule](github-protection-before.json) and [effective readback](github-protection-current.json) preserve the initial unprotected state and installed PR-only protection. New required contexts remain **Pending** because the workflow is only on the setup branch. The draft's mergeability does not establish check enforcement. Next: obtain authorization for main integration, then apply the [prepared required-check policy](required-check-protection.json), read it back, and qualify an ordinary main-based PR plus each independent failed-check blocking path. Coordinator owns this remaining ENFORCE-1 action. Never require absent contexts to force integration.
+
+Primary-checkout installation/preservation and final checkpoint audit are in progress; [acceptance](../ACCEPTANCE_STATUS.md) is authoritative.
 
 No recurring automation or local hooks were installed. No physical-device/product acceptance was executed. The current single app target has no XCTest target. README iPad wording exceeds currently configured iPhone family; recorded as a future product clarification.
