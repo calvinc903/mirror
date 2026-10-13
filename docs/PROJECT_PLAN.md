@@ -1,9 +1,11 @@
 # Mirror project plan
 
+Current milestone: [production readiness and App Store resubmission](RELEASE_PLAN.md), authorized by the user's subsequent request. Its latest qualification is in the [release report](agent-reports/release-readiness.md). The setup plan below is historical; its original exclusions do not restrict the authorized release task.
+
 Goal: adopt the requested repository agent system while preserving the existing camera app and user work.
 Priority contract: camera privacy, permission handling, mirroring, session teardown and brightness restoration.
 
-## Current bounded milestone
+## Historical setup milestone
 
 1. Consciously adapt the fourteen skill documents to Mirror and preserve existing privacy documentation.
 2. Provide reproducible documentation checks and a signing-free generic iOS Simulator build with frozen-input receipts.
@@ -21,4 +23,4 @@ Sol 6.1 xhigh planning and independent xhigh critique completed before implement
 
 A Python standard-library build wrapper records argv, timestamps, toolchain, source hashes and the actual exit status in one portable implementation. A shared Xcode scheme makes CLI target selection reproducible. These setup additions do not alter app behavior.
 
-No product features, app source changes, signing, App Store submissions, local hooks or recurring automation are included. Future substantial features reopen xhigh planning and independent critique under the [framework](DELEGATION_FRAMEWORK.md).
+The original setup milestone excluded product features, app source changes, signing, App Store submissions, local hooks and recurring automation. The subsequent release request expands the product/signing/submission scope under its completed xhigh plan and critique; hooks and recurring automation remain outside scope. Future substantial features reopen xhigh planning and independent critique under the [framework](DELEGATION_FRAMEWORK.md).
