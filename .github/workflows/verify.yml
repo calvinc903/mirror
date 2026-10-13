@@ -36,6 +36,15 @@ jobs:
           persist-credentials: false
       - name: Compile Mirror and retain source-bound receipt
         run: python3 scripts/build_ios.py --output "${{ runner.temp }}/mirror-ios-build"
+      - name: Execute camera and brightness regressions
+        shell: bash
+        run: |
+          set -euo pipefail
+          qa_device=$(xcrun simctl create "Mirror CI ${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}" com.apple.CoreSimulator.SimDeviceType.iPhone-18-Pro com.apple.CoreSimulator.SimRuntime.iOS-27-0)
+          trap 'xcrun simctl shutdown "$qa_device" >/dev/null 2>&1 || true; xcrun simctl delete "$qa_device"' EXIT
+          xcrun simctl boot "$qa_device"
+          xcrun simctl bootstatus "$qa_device" -b
+          python3 scripts/test_ios.py --destination "platform=iOS Simulator,id=$qa_device" --only-testing MirrorTests --output "${{ runner.temp }}/mirror-ios-tests"
       - name: Retain build evidence
         if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
@@ -46,3 +55,7 @@ jobs:
             ${{ runner.temp }}/mirror-ios-build/build.log
             ${{ runner.temp }}/mirror-ios-build/receipt.json
             ${{ runner.temp }}/mirror-ios-build/build.xcresult
+            ${{ runner.temp }}/mirror-ios-tests/tests.log
+            ${{ runner.temp }}/mirror-ios-tests/receipt.json
+            ${{ runner.temp }}/mirror-ios-tests/test-summary.json
+            ${{ runner.temp }}/mirror-ios-tests/tests.xcresult

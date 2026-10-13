@@ -7,14 +7,14 @@ Mirror is a simple iOS app that turns the home screen into a full-screen selfie 
 - Front-facing camera opens by default
 - Mirrored preview for a natural mirror feel
 - White edge lighting to brighten your face
-- Adjustable light intensity slider
+- Digital zoom slider from 1× to 3×
 
 ## Requirements
 
 - Xcode
-- iPhone or iPad with a front-facing camera
+- iPhone running iOS 27 or newer with a front-facing camera
 
-The app requires camera permission. The permission prompt uses `NSCameraUsageDescription` in `Info.plist`.
+The app requires camera permission. The permission prompt uses `NSCameraUsageDescription` in the Xcode build settings. If access is denied, use Open Settings to enable it. Camera capture pauses and the preview is covered while the app is inactive; edge-light brightness restores when the light turns off or the app becomes inactive.
 
 ## Running
 

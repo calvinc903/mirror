@@ -35,7 +35,7 @@ def source_manifest():
 
 
 def capture(argv):
-    return subprocess.check_output(argv, cwd=ROOT, text=True, stderr=subprocess.STDOUT).strip()
+    return subprocess.check_output(argv, cwd=ROOT, text=True, stderr=subprocess.STDOUT, timeout=45).strip()
 
 
 def main():
@@ -64,8 +64,6 @@ def main():
     before = source_manifest()
     receipt = {
         "schema_version": 1, "started_at_utc": utc_now(), "argv": argv,
-        "checkout_commit": capture(["git", "rev-parse", "HEAD"]),
-        "checkout_tree": capture(["git", "rev-parse", "HEAD^{tree}"]),
         "event_sha": os.environ.get("GITHUB_SHA"),
         "pr_head_sha": os.environ.get("MIRROR_PR_HEAD_SHA"),
         "workflow_sha256": before[".github/workflows/verify.yml"],
@@ -76,6 +74,8 @@ def main():
     log_path = output / "build.log"
     with log_path.open("w", encoding="utf-8") as log:
         try:
+            receipt["checkout_commit"] = capture(["git", "rev-parse", "HEAD"])
+            receipt["checkout_tree"] = capture(["git", "rev-parse", "HEAD^{tree}"])
             receipt["xcode"] = capture(["xcodebuild", "-version"])
             receipt["sdks"] = capture(["xcodebuild", "-showsdks"])
             receipt["developer_dir"] = capture(["xcode-select", "-p"])
@@ -91,7 +91,7 @@ def main():
             if receipt["source_changed_during_build"]:
                 log.write("\nSource inputs changed during build; verification refused.\n")
                 code = 2
-        except (OSError, ValueError, RuntimeError, subprocess.CalledProcessError) as error:
+        except (OSError, ValueError, RuntimeError, subprocess.CalledProcessError, subprocess.TimeoutExpired) as error:
             code = 2
             log.write(f"\nVerification error: {error}\n")
             receipt["error"] = str(error)

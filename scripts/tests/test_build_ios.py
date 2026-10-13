@@ -17,11 +17,13 @@ SPEC.loader.exec_module(BUILD)
 
 
 class BuildGateTests(unittest.TestCase):
-    def run_fixture(self, post_manifest, build_exit=0):
+    def run_fixture(self, post_manifest, build_exit=0, capture_error=None):
         before = {".github/workflows/verify.yml": "workflow-hash", "Mirror/ContentView.swift": "source-hash"}
         with tempfile.TemporaryDirectory() as directory:
             output = Path(directory) / "output"
             def capture(argv):
+                if capture_error is not None:
+                    raise capture_error
                 return "Xcode 27.0\nBuild version fixture" if argv == ["xcodebuild", "-version"] else "fixture"
             with (
                 patch.object(BUILD, "source_manifest", side_effect=[before, post_manifest]),
@@ -40,6 +42,12 @@ class BuildGateTests(unittest.TestCase):
         self.assertEqual(receipt["exit_code"], 2)
         self.assertEqual(receipt["xcodebuild_exit_code"], 0)
         self.assertEqual(receipt["error"], "source became unreadable")
+
+    def test_stalled_git_metadata_produces_failure_receipt(self):
+        code, receipt = self.run_fixture({}, capture_error=subprocess.TimeoutExpired(["git", "rev-parse", "HEAD"], 45))
+        self.assertEqual(code, 2)
+        self.assertIn("timed out", receipt["error"])
+        self.assertNotIn("xcodebuild_exit_code", receipt)
 
     def test_changed_source_fails_despite_successful_compile(self):
         code, receipt = self.run_fixture({".github/workflows/verify.yml": "workflow-hash", "Mirror/ContentView.swift": "changed"})

@@ -6,7 +6,7 @@ Truth: [status](docs/PROJECT_STATUS.md), [plan](docs/PROJECT_PLAN.md), [acceptan
 
 ## Repository boundaries
 
-Mirror is an iPhone camera app using SwiftUI, AVFoundation and UIKit. Preserve camera permission handling, local preview privacy, mirroring, session teardown and restoration of the user's screen brightness. Do not infer physical-device behavior from a simulator build. No XCTest target exists yet; keep unexecuted product checks Pending.
+Mirror is an iPhone camera app using SwiftUI, AVFoundation and UIKit. Preserve camera permission handling, local preview privacy, mirroring, session teardown and restoration of the user's screen brightness. Do not infer physical-device behavior from a simulator build. XCTest and UI test targets cover lifecycle boundaries and actual UI paths; keep unexecuted product checks Pending.
 
 Use `python3 scripts/check_agent_system.py` and `python3 -m unittest discover -s scripts/tests -v` for the agent documentation checks. Use `python3 scripts/build_ios.py` for a signing-free simulator compile with source-bound receipts. See the [workflow](docs/DEVELOPMENT_WORKFLOW.md).
 
