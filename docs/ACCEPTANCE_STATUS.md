@@ -18,12 +18,14 @@ Documentation validation and simulator compilation establish their named contrac
 
 | ID | Contract | State | Evidence / next action |
 | --- | --- | --- | --- |
-| PROD-PERM-1 | Denial, Settings grant/revocation and safe re-entry | Pending | Controller regression passed; actual UI/device checks required |
-| PROD-CAMERA-1 | Mirrored preview, lifetime, failure/interruption recovery | Pending | Real driver/controller regression 10/10; optical/device checks required |
-| PROD-LIGHT-1 | Correct edge light and user brightness restoration | Pending | Full regression and physical screen checks required |
+| PROD-PERM-1 | Denial, Settings grant/revocation and safe re-entry | Pending | 14-unit suite and actual denial UI passed; physical Settings grant/revocation required |
+| PROD-CAMERA-1 | Mirrored preview, lifetime, failure/interruption recovery | Pending | Real driver/controller regression and simulator recovery UI passed; optical/device checks required |
+| PROD-LIGHT-1 | Correct edge light and user brightness restoration | Pending | Brightness regression passed in full 14-unit suite; physical screen checks required |
 | PROD-A11Y-1 | Accessible light/zoom controls | Pending | UI and visual checks required |
 | PROD-PRIVACY-1 | Immediate preview concealment, local-only processing | Pending | Source implementation; actual app-switcher/archive checks required |
-| PROD-TEST-1 | Full app tests and independent final review | Pending | Scoped 10/10 passed; full candidate execution/review required |
-| RELEASE-1 | Matching signed App Store eligible candidate | Pending | Reserve 1.0 build 17; prepare candidate-bound archive/upload |
-| REVIEW-INFO-1 | Physical demo and six Apple information items | Pending | User authorized non-private demo; recording and accurate notes required |
+| PROD-TEST-1 | Full app tests and independent final review | Pending | 14 optimized unit tests, two simulator UI paths and independent shipping-source review passed; physical acceptance Pending |
+| RELEASE-1 | Matching signed App Store eligible candidate | Passed | Cloud17 from reviewed e353f43; uploaded 1.0/17 Validated / Ready to Submit; see [release evidence](agent-reports/release/evidence.json) |
+| REVIEW-INFO-1 | Physical demo and six Apple information items | Pending | User authorized non-private demo; locked-device attempt failed before bootstrap. Draft response saved; actual recording required |
 | SUBMIT-1 | Submitted matching qualified candidate | Pending | App Store status remains Rejected; submit only after readiness gates |
+
+Current release evidence and private raw artifact pointers: [qualification report](agent-reports/release-readiness.md). Build readiness does not establish physical product readiness or App Store submission.

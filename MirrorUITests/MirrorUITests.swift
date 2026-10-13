@@ -17,6 +17,7 @@ final class MirrorUITests: XCTestCase {
         XCTAssertTrue(app.buttons["Try Again"].exists)
         XCTAssertFalse(app.buttons["Mirror light"].exists)
         XCTAssertFalse(app.sliders["Zoom"].exists)
+        retainScreenshot(app, name: "Simulator camera unavailable")
         app.buttons["Try Again"].tap()
         XCTAssertTrue(unavailable.waitForExistence(timeout: 15))
         XCUIDevice.shared.press(.home)
@@ -38,6 +39,7 @@ final class MirrorUITests: XCTestCase {
         XCTAssertTrue(app.buttons["Open Settings"].isHittable)
         XCTAssertFalse(app.buttons["Mirror light"].exists)
         XCTAssertFalse(app.sliders["Zoom"].exists)
+        retainScreenshot(app, name: "Camera denied with Settings recovery")
         XCUIDevice.shared.press(.home)
         app.activate()
         XCTAssertTrue(denied.waitForExistence(timeout: 10))
@@ -54,6 +56,7 @@ final class MirrorUITests: XCTestCase {
         let light = app.buttons["Mirror light"]
         XCTAssertTrue(light.waitForExistence(timeout: 15), "Physical camera must start before controls become accessible")
         XCTAssertEqual(light.value as? String, "Off")
+        retainScreenshot(app, name: "Physical mirror at 1x with light off")
         light.tap()
         XCTAssertEqual(light.value as? String, "On")
         let zoom = app.sliders["Zoom"]
@@ -61,6 +64,7 @@ final class MirrorUITests: XCTestCase {
         XCTAssertEqual(zoom.value as? String, "1.0 times")
         zoom.adjust(toNormalizedSliderPosition: 1)
         XCTAssertEqual(zoom.value as? String, "3.0 times")
+        retainScreenshot(app, name: "Physical mirror at 3x with light on")
         zoom.adjust(toNormalizedSliderPosition: 0)
         XCTAssertEqual(zoom.value as? String, "1.0 times")
         XCUIDevice.shared.press(.home)
@@ -69,9 +73,17 @@ final class MirrorUITests: XCTestCase {
         XCTAssertEqual(light.value as? String, "On")
         light.tap()
         XCTAssertEqual(light.value as? String, "Off")
+        retainScreenshot(app, name: "Physical mirror after reentry")
         // Pixel mirroring, optical image quality, actual brightness restoration
         // and app-switcher privacy still require the coordinator's device QA.
         #endif
+    }
+
+    private func retainScreenshot(_ app: XCUIApplication, name: String) {
+        let attachment = XCTAttachment(screenshot: app.screenshot())
+        attachment.name = name
+        attachment.lifetime = .keepAlways
+        add(attachment)
     }
 
     @discardableResult private func respondToCameraAlert(allow: Bool) -> Bool {
