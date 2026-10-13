@@ -13,7 +13,9 @@ State: role/workflow documentation and executable checks implemented, independen
 
 Shared-resource owner: coordinator owns integration, GitHub settings and build execution; no camera/device lease assigned. No schedules or hooks installed.
 
-Next: finish local installation/preservation checks and checkpoint audit, then obtain authorization to integrate PR #1 on `main`. PR/no-force/admin protection is active. Required new check contexts remain Pending until the workflow is on `main`; activate the prepared policy and verify an ordinary main-based PR and both failure-blocking paths afterward.
+Local installation/preservation and the independent checkpoint audit passed. The primary checkout keeps its original HEAD/staging and app/media content; the README received a workflow appendix.
+
+Next: obtain authorization to integrate PR #1 on `main`. PR/no-force/admin protection is active. Required new check contexts remain Pending until the workflow is on `main`; activate the prepared policy and verify an ordinary main-based PR and both failure-blocking paths afterward.
 
 ## Product gaps
 

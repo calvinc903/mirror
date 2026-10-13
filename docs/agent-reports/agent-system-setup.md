@@ -12,7 +12,7 @@ Planning agent: `gpt-6.1-sol`, `xhigh`, report-only registered worktree. Indepen
 
 Local baseline command: `xcodebuild -project Mirror.xcodeproj -scheme Mirror -sdk iphonesimulator -destination 'generic/platform=iOS Simulator' -configuration Debug -derivedDataPath /private/tmp/mirror-setup-evidence/baseline-derived-data -resultBundlePath /private/tmp/mirror-setup-evidence/baseline-build.xcresult CODE_SIGNING_ALLOWED=NO build`. Exit 0; Xcode 27.0 (27A266a), iOS Simulator SDK 27.0. Raw baseline log/result retained under `/private/tmp/mirror-setup-evidence/`; temporary storage is not a durable backup.
 
-Official runner source: [GitHub runner-images Xcode 27 announcement](https://github.com/actions/runner-images/issues/14404), read October 13 UTC / October 12 America/New_York. The `xcode-27` label is a preview; normal macOS 26 images inspected had Xcode 26. Actual hosted availability remains Pending until executed.
+Official runner source: [GitHub runner-images Xcode 27 announcement](https://github.com/actions/runner-images/issues/14404), read October 13 UTC / October 12 America/New_York. The `xcode-27` label is a preview; normal macOS 26 images inspected had Xcode 26. Hosted availability was subsequently verified by the successful runs below.
 
 ## Candidate evidence and disposition
 
@@ -36,6 +36,12 @@ One attempted negative control changed scheme target references; Xcode still com
 
 [Before rule](github-protection-before.json) and [effective readback](github-protection-current.json) preserve the initial unprotected state and installed PR-only protection. New required contexts remain **Pending** because the workflow is only on the setup branch. The draft's mergeability does not establish check enforcement. Next: obtain authorization for main integration, then apply the [prepared required-check policy](required-check-protection.json), read it back, and qualify an ordinary main-based PR plus each independent failed-check blocking path. Coordinator owns this remaining ENFORCE-1 action. Never require absent contexts to force integration.
 
-Primary-checkout installation/preservation and final checkpoint audit are in progress; [acceptance](../ACCEPTANCE_STATUS.md) is authoritative.
+Primary installation completed: thirty-one setup paths were copied after conflict/symlink preflight. Thirty-eight existing file hashes, original primary HEAD and the staged-diff digest were preserved. README retains its original bytes with the authorized twelve-line workflow appendix. [Compact preservation receipt](user-preservation.json); the full original manifest stays in private temporary storage.
+
+Fresh Sol 6.1 xhigh checkpoint audit passed with no material findings, reviewing `366a20a2eb1c11b3ec478f635003222510af8b6e` (tree `479f59a84446699925c3128a6322af9c73a21683`) plus the compact preservation receipt. The auditor independently recomputed source/receipt/preservation digests, compared scope and ran seventeen documentation checks, eleven regressions and diff whitespace checks. Commands `python3 scripts/check_agent_system.py` and `python3 -m unittest discover -s scripts/tests -v` both exited 0 between `2026-10-13T03:40:25.729857Z` and `03:40:25.906858Z` on Python 3.14.3, macOS 27 arm64. Root adopted all three follow-up actions: finalize truthful records, retain the audit timing boundary, and seek final integration authorization before required-context activation. See [audit report](checkpoint-audit.md).
+
+The meaningful full-checkpoint boundary is `2026-10-13T03:37:26Z`, from the audited commit timestamp. Exact audit dispatch time was not instrumented and remains unavailable; subsequent clock readback was `2026-10-13T03:40:40Z`. Future coordinators must sample dispatch time before spawning. No two-hour active-work boundary was reached in this setup. Activity/utilization and avoidable waiting are Unknown.
+
+The package is installed locally, committed and pushed in draft PR #1. [Acceptance](../ACCEPTANCE_STATUS.md) is authoritative; main integration and required-context qualification remain the next unfinished step.
 
 No recurring automation or local hooks were installed. No physical-device/product acceptance was executed. The current single app target has no XCTest target. README iPad wording exceeds currently configured iPhone family; recorded as a future product clarification.
