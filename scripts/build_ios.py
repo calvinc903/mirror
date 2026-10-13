@@ -92,6 +92,7 @@ def main():
                 log.write("\nSource inputs changed during build; verification refused.\n")
                 code = 2
         except (OSError, ValueError, RuntimeError, subprocess.CalledProcessError) as error:
+            code = 2
             log.write(f"\nVerification error: {error}\n")
             receipt["error"] = str(error)
     receipt.update({"finished_at_utc": utc_now(), "exit_code": code, "log_sha256": digest(log_path)})
