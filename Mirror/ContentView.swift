@@ -1,7 +1,6 @@
 import SwiftUI
 import AVFoundation
 import UIKit
-import Playgrounds
 
 @main struct MyApp: App {
     init() {
@@ -18,61 +17,75 @@ import Playgrounds
 }
 
 struct ContentView: View {
-    @State private var cameraAccess: CameraAccess = .checking
+    @StateObject private var camera = CameraController()
+    @Environment(\.scenePhase) private var scenePhase
     @State private var lightIsOn = false
     @State private var cameraZoom = 1.0
 
     var body: some View {
         ZStack {
-            Color.black
-                .ignoresSafeArea()
-
-            switch cameraAccess {
-            case .checking:
-                ProgressView()
-                    .tint(.white)
-            case .authorized:
-                GeometryReader { geometry in
-                    let lightBarThickness = lightIsOn ? lightThickness(for: geometry.size) : 0
-
-                    ZStack {
-                        SelfieCameraView()
-                            .ignoresSafeArea()
-                            .scaleEffect(cameraZoom)
-                            .clipped()
-
-                        MirrorLightOverlay(isOn: lightIsOn, thickness: lightBarThickness)
-                            .ignoresSafeArea()
-                            .allowsHitTesting(false)
-
-                        ScreenBrightnessView(isOn: lightIsOn)
-                            .frame(width: 0, height: 0)
-                            .allowsHitTesting(false)
-
+            Color.black.ignoresSafeArea()
+            GeometryReader { geometry in
+                ZStack {
+                    SelfieCameraView(controller: camera)
+                        .ignoresSafeArea()
+                        .scaleEffect(cameraZoom)
+                        .clipped()
+                    if camera.isPreviewVisible {
+                        MirrorLightOverlay(isOn: lightIsOn, thickness: lightThickness(for: geometry.size))
+                            .ignoresSafeArea().allowsHitTesting(false)
                         VStack {
                             Spacer()
-
-                            MirrorControlBar(
-                                lightIsOn: $lightIsOn,
-                                cameraZoom: $cameraZoom
-                            )
+                            MirrorControlBar(lightIsOn: $lightIsOn, cameraZoom: $cameraZoom)
                         }
-                        .padding(.horizontal, 28)
-                        .padding(.bottom, 18)
+                        .padding(.horizontal, 28).padding(.bottom, 18)
+                    } else {
+                        Color.black.ignoresSafeArea()
+                        if scenePhase == .active { cameraStatus }
                     }
+                    ScreenBrightnessView(enabled: lightIsOn, eligible: camera.isPreviewVisible && scenePhase == .active)
+                        .frame(width: 0, height: 0).allowsHitTesting(false)
                 }
-                .ignoresSafeArea()
+            }.ignoresSafeArea()
+        }
+        .onAppear { camera.setActive(scenePhase == .active) }
+        .onChange(of: scenePhase) { _, phase in camera.setActive(phase == .active) }
+        .onReceive(NotificationCenter.default.publisher(for: UIApplication.willResignActiveNotification)) { _ in
+            camera.setActive(false)
+        }
+        .onDisappear { camera.setActive(false) }
+    }
+
+    @ViewBuilder private var cameraStatus: some View {
+        VStack(spacing: 16) {
+            switch camera.state {
+            case .checking, .starting:
+                ProgressView().tint(.white).accessibilityLabel("Starting camera")
             case .denied:
-                Text("Camera access is needed to use Mirror.")
-                    .font(.body)
-                    .foregroundStyle(.white)
-                    .multilineTextAlignment(.center)
-                    .padding()
+                Text("Camera access is needed to use Mirror. Allow camera access in Settings.")
+                Button("Open Settings") {
+                    guard let url = URL(string: UIApplication.openSettingsURLString) else { return }
+                    UIApplication.shared.open(url)
+                }.buttonStyle(.bordered)
+            case .restricted:
+                Text("Camera access is restricted on this iPhone. Check Screen Time or contact the person who manages this device.")
+            case .unavailable:
+                Text("The front camera is unavailable.")
+                retryButton
+            case .failed:
+                Text("The camera could not start. Try again.")
+                retryButton
+            case .interrupted:
+                Text("The camera is temporarily unavailable. Close other camera apps and try again.")
+                retryButton
+            case .running:
+                EmptyView()
             }
         }
-        .task {
-            cameraAccess = await CameraAccess.requestCurrent()
-        }
+        .font(.body).foregroundStyle(.white).multilineTextAlignment(.center).padding(28)
+    }
+    private var retryButton: some View {
+        Button("Try Again") { camera.retry() }.buttonStyle(.bordered)
     }
 
     private func lightThickness(for size: CGSize) -> CGFloat {
@@ -112,13 +125,17 @@ private struct ControlSlider: View {
             Image(systemName: leadingSystemName)
                 .foregroundStyle(.white.opacity(0.85))
                 .frame(width: 24)
+                .accessibilityHidden(true)
 
             Slider(value: $value, in: range)
                 .tint(.white)
+                .accessibilityLabel("Zoom")
+                .accessibilityValue(String(format: "%.1f times", value))
 
             Image(systemName: trailingSystemName)
                 .foregroundStyle(.white)
                 .frame(width: 24)
+                .accessibilityHidden(true)
         }
     }
 }
@@ -167,181 +184,6 @@ private struct MirrorLightOverlay: View {
     }
 }
 
-private struct ScreenBrightnessView: UIViewRepresentable {
-    let isOn: Bool
-
-    func makeUIView(context: Context) -> ScreenBrightnessHostView {
-        let view = ScreenBrightnessHostView()
-        view.update(isOn: isOn)
-        return view
-    }
-
-    func updateUIView(_ uiView: ScreenBrightnessHostView, context: Context) {
-        uiView.update(isOn: isOn)
-    }
-
-    static func dismantleUIView(_ uiView: ScreenBrightnessHostView, coordinator: ()) {
-        uiView.restoreScreenBrightness()
-    }
-}
-
-private final class ScreenBrightnessHostView: UIView {
-    private var isOn = false
-    private var originalScreenBrightness: CGFloat?
-    private weak var brightnessScreen: UIScreen?
-
-    override func didMoveToWindow() {
-        super.didMoveToWindow()
-        applyScreenBrightness()
-    }
-
-    func update(isOn: Bool) {
-        self.isOn = isOn
-        applyScreenBrightness()
-    }
-
-    func restoreScreenBrightness() {
-        guard let originalScreenBrightness else { return }
-        brightnessScreen?.brightness = originalScreenBrightness
-        self.originalScreenBrightness = nil
-        brightnessScreen = nil
-    }
-
-    private func applyScreenBrightness() {
-        guard let screen = window?.windowScene?.screen else { return }
-
-        guard isOn else {
-            restoreScreenBrightness()
-            return
-        }
-
-        if originalScreenBrightness == nil {
-            originalScreenBrightness = screen.brightness
-            brightnessScreen = screen
-        }
-
-        screen.brightness = 1.0
-    }
-}
-
-private enum CameraAccess {
-    case checking
-    case authorized
-    case denied
-
-    static func requestCurrent() async -> CameraAccess {
-        switch AVCaptureDevice.authorizationStatus(for: .video) {
-        case .authorized:
-            return .authorized
-        case .notDetermined:
-            let granted = await AVCaptureDevice.requestAccess(for: .video)
-            return granted ? .authorized : .denied
-        case .denied, .restricted:
-            return .denied
-        @unknown default:
-            return .denied
-        }
-    }
-}
-
-private struct SelfieCameraView: UIViewRepresentable {
-    func makeUIView(context: Context) -> CameraPreviewView {
-        let view = CameraPreviewView()
-        view.configure(with: context.coordinator.session)
-        context.coordinator.startSession()
-        return view
-    }
-
-    func updateUIView(_ uiView: CameraPreviewView, context: Context) {}
-
-    func makeCoordinator() -> Coordinator {
-        Coordinator()
-    }
-
-    static func dismantleUIView(_ uiView: CameraPreviewView, coordinator: Coordinator) {
-        coordinator.stopSession()
-    }
-
-    final class Coordinator {
-        let session = AVCaptureSession()
-        private let sessionQueue = DispatchQueue(label: "Mirror.camera.session")
-
-        init() {
-            configureSession()
-        }
-
-        func startSession() {
-            sessionQueue.async { [session] in
-                guard !session.isRunning else { return }
-                session.startRunning()
-            }
-        }
-
-        func stopSession() {
-            sessionQueue.async { [session] in
-                guard session.isRunning else { return }
-                session.stopRunning()
-            }
-        }
-
-        private func configureSession() {
-            sessionQueue.async { [session] in
-                session.beginConfiguration()
-                session.sessionPreset = .high
-
-                defer {
-                    session.commitConfiguration()
-                }
-
-                guard
-                    let camera = AVCaptureDevice.default(.builtInWideAngleCamera, for: .video, position: .front),
-                    let input = try? AVCaptureDeviceInput(device: camera),
-                    session.canAddInput(input)
-                else {
-                    return
-                }
-
-                session.addInput(input)
-            }
-        }
-    }
-}
-
-private final class CameraPreviewView: UIView {
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        backgroundColor = .black
-    }
-
-    required init?(coder: NSCoder) {
-        super.init(coder: coder)
-        backgroundColor = .black
-    }
-
-    override class var layerClass: AnyClass {
-        AVCaptureVideoPreviewLayer.self
-    }
-
-    private var previewLayer: AVCaptureVideoPreviewLayer {
-        layer as! AVCaptureVideoPreviewLayer
-    }
-
-    func configure(with session: AVCaptureSession) {
-        previewLayer.backgroundColor = UIColor.black.cgColor
-        previewLayer.session = session
-        previewLayer.videoGravity = .resizeAspectFill
-
-        if let connection = previewLayer.connection {
-            connection.automaticallyAdjustsVideoMirroring = false
-            connection.isVideoMirrored = true
-        }
-    }
-}
-
 #Preview {
     ContentView()
-}
-
-#Playground {
-    _ = 1 + 2
 }

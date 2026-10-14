@@ -1,0 +1,18 @@
+{
+  "started_at_utc": "2026-10-13T05:35:42.218592+00:00",
+  "finished_at_utc": "2026-10-13T05:35:42.317162+00:00",
+  "argv": [
+    "codesign",
+    "--verify",
+    "--deep",
+    "--strict",
+    "--verbose=2",
+    "/private/tmp/mirror-release-device-1/DerivedData/Build/Products/Release-iphoneos/Mirror.app"
+  ],
+  "exit_code": 0,
+  "execution_context": "require_escalated; host certificate trust store available",
+  "executable_sha256": "409705982b1544e492acc6d3454d9fb75367cf803459e590f2bcade6343095c3",
+  "info_plist_sha256": "8dc4fbf68266d9ffdeacf4418771c0a7a3f99cff19d04253c7dc263fc18d4b2f",
+  "stdout": "/private/tmp/mirror-release-device-1/DerivedData/Build/Products/Release-iphoneos/Mirror.app: valid on disk\n/private/tmp/mirror-release-device-1/DerivedData/Build/Products/Release-iphoneos/Mirror.app: satisfies its Designated Requirement\n",
+  "note": "Sandboxed inspection and auditor recheck failed CSSMERR_TP_NOT_TRUSTED; this command checks the same app with normal host trust access."
+}

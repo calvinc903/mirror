@@ -1,0 +1,61 @@
+name: Mirror verification
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main, 'codex/**']
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  agent-system:
+    name: agent-system
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+      - name: Validate repository agent documents
+        run: python3 scripts/check_agent_system.py
+      - name: Exercise documentation gate controls
+        run: python3 -m unittest discover -s scripts/tests -v
+
+  ios-build:
+    name: ios-build
+    runs-on: xcode-27
+    timeout-minutes: 20
+    env:
+      MIRROR_PR_HEAD_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+      - name: Compile Mirror and retain source-bound receipt
+        run: python3 scripts/build_ios.py --output "${{ runner.temp }}/mirror-ios-build"
+      - name: Execute camera and brightness regressions
+        shell: bash
+        run: |
+          set -euo pipefail
+          qa_device=$(xcrun simctl create "Mirror CI ${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}" com.apple.CoreSimulator.SimDeviceType.iPhone-18-Pro com.apple.CoreSimulator.SimRuntime.iOS-27-0)
+          trap 'xcrun simctl shutdown "$qa_device" >/dev/null 2>&1 || true; xcrun simctl delete "$qa_device"' EXIT
+          # Capture bounded toolchain metadata before simulator startup competes
+          # for runner resources; xcodebuild test prepares this leased destination.
+          python3 scripts/test_ios.py --destination "platform=iOS Simulator,id=$qa_device" --only-testing MirrorTests --output "${{ runner.temp }}/mirror-ios-tests"
+      - name: Retain build evidence
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: ios-build-${{ github.run_id }}-${{ github.run_attempt }}
+          retention-days: 30
+          path: |
+            ${{ runner.temp }}/mirror-ios-build/build.log
+            ${{ runner.temp }}/mirror-ios-build/receipt.json
+            ${{ runner.temp }}/mirror-ios-build/build.xcresult
+            ${{ runner.temp }}/mirror-ios-tests/tests.log
+            ${{ runner.temp }}/mirror-ios-tests/receipt.json
+            ${{ runner.temp }}/mirror-ios-tests/test-summary.json
+            ${{ runner.temp }}/mirror-ios-tests/tests.xcresult

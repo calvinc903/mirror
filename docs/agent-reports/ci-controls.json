@@ -1,0 +1,130 @@
+{
+  "positive": {
+    "run_id": 38342271037,
+    "head_sha": "a875a07120819ca0e829b737adc3aca127f21492",
+    "jobs": [
+      {
+        "name": "ios-build",
+        "status": "completed",
+        "conclusion": "success",
+        "html_url": "https://github.com/calvinc903/mirror/actions/runs/38342271037/job/115115693727",
+        "started_at": "2026-10-13T03:33:33Z",
+        "completed_at": "2026-10-13T03:34:19Z",
+        "runner_name": "GitHub Actions 1000000694",
+        "labels": [
+          "xcode-27"
+        ]
+      },
+      {
+        "name": "agent-system",
+        "status": "completed",
+        "conclusion": "success",
+        "html_url": "https://github.com/calvinc903/mirror/actions/runs/38342271037/job/115115693952",
+        "started_at": "2026-10-13T03:33:29Z",
+        "completed_at": "2026-10-13T03:33:34Z",
+        "runner_name": "GitHub Actions 1000000695",
+        "labels": [
+          "ubuntu-24.04"
+        ]
+      }
+    ]
+  },
+  "negative_docs": {
+    "run_id": 38342068840,
+    "head_sha": "a764525c5d59ede06f844ec08ddc9039324ae9d8",
+    "jobs": [
+      {
+        "name": "ios-build",
+        "status": "completed",
+        "conclusion": "success",
+        "html_url": "https://github.com/calvinc903/mirror/actions/runs/38342068840/job/115115059882",
+        "started_at": "2026-10-13T03:31:03Z",
+        "completed_at": "2026-10-13T03:31:47Z",
+        "runner_name": "GitHub Actions 1000000686",
+        "labels": [
+          "xcode-27"
+        ]
+      },
+      {
+        "name": "agent-system",
+        "status": "completed",
+        "conclusion": "failure",
+        "html_url": "https://github.com/calvinc903/mirror/actions/runs/38342068840/job/115115060091",
+        "started_at": "2026-10-13T03:30:57Z",
+        "completed_at": "2026-10-13T03:31:02Z",
+        "runner_name": "GitHub Actions 1000000687",
+        "labels": [
+          "ubuntu-24.04"
+        ]
+      }
+    ]
+  },
+  "negative_build": {
+    "run_id": 38342237037,
+    "head_sha": "201591e05a0ed7308e3a5f665fd2689829373cf2",
+    "jobs": [
+      {
+        "name": "agent-system",
+        "status": "completed",
+        "conclusion": "success",
+        "html_url": "https://github.com/calvinc903/mirror/actions/runs/38342237037/job/115115590859",
+        "started_at": "2026-10-13T03:33:03Z",
+        "completed_at": "2026-10-13T03:33:08Z",
+        "runner_name": "GitHub Actions 1000000690",
+        "labels": [
+          "ubuntu-24.04"
+        ]
+      },
+      {
+        "name": "ios-build",
+        "status": "completed",
+        "conclusion": "failure",
+        "html_url": "https://github.com/calvinc903/mirror/actions/runs/38342237037/job/115115591028",
+        "started_at": "2026-10-13T03:33:15Z",
+        "completed_at": "2026-10-13T03:33:32Z",
+        "runner_name": "GitHub Actions 1000000691",
+        "labels": [
+          "xcode-27"
+        ]
+      }
+    ]
+  },
+  "check_apps": [
+    {
+      "name": "agent-system",
+      "head_sha": "a875a07120819ca0e829b737adc3aca127f21492",
+      "status": "completed",
+      "conclusion": "success",
+      "details_url": "https://github.com/calvinc903/mirror/actions/runs/38342271037/job/115115693952",
+      "app_id": 15368,
+      "app_slug": "github-actions"
+    },
+    {
+      "name": "ios-build",
+      "head_sha": "a875a07120819ca0e829b737adc3aca127f21492",
+      "status": "completed",
+      "conclusion": "success",
+      "details_url": "https://github.com/calvinc903/mirror/actions/runs/38342271037/job/115115693727",
+      "app_id": 15368,
+      "app_slug": "github-actions"
+    },
+    {
+      "name": "agent-system",
+      "head_sha": "a875a07120819ca0e829b737adc3aca127f21492",
+      "status": "completed",
+      "conclusion": "success",
+      "details_url": "https://github.com/calvinc903/mirror/actions/runs/38342267186/job/115115682468",
+      "app_id": 15368,
+      "app_slug": "github-actions"
+    },
+    {
+      "name": "ios-build",
+      "head_sha": "a875a07120819ca0e829b737adc3aca127f21492",
+      "status": "completed",
+      "conclusion": "success",
+      "details_url": "https://github.com/calvinc903/mirror/actions/runs/38342267186/job/115115682207",
+      "app_id": 15368,
+      "app_slug": "github-actions"
+    }
+  ]
+}

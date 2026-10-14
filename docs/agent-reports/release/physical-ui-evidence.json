@@ -1,0 +1,124 @@
+{
+  "recorded_at_utc": "2026-10-14T00:54:54.745131+00:00",
+  "shipping_source": "e353f43c858b12e0c45f34ead2340f01cfb34c3a",
+  "worker_commit": "3b76cca6bb18034df53d41f46c4499ffcb76177c",
+  "integration_commit": "5a9fc6f",
+  "shipping_app_and_project_unchanged": true,
+  "ui_source_sha256": "5186a543ed6b596474163b654d73d4916d65c978d9a90803bc21f71eeb88a2b7",
+  "environment": {
+    "model": "iPhone13Pro",
+    "os": "27.2",
+    "os_build": "24B5099f",
+    "transport": "localNetwork",
+    "remote_viewing": "stopped by coordinator; do not use during optics QA"
+  },
+  "physical_ui": {
+    "raw_directory": "/private/tmp/mirror-release-ui-physical-4-endpoint",
+    "receipt_sha256": "e5e60530e90519c1a3b94287586e6e15309ac6646e528a34ffebdae6ad31d542",
+    "log_sha256": "c263903a2e7f3007aa05ae29c4e641e9dba32f3a9f8f51edb3e507c746bc8391",
+    "started_at_utc": "2026-10-14T00:44:57.412577+00:00",
+    "finished_at_utc": "2026-10-14T00:45:39.251289+00:00",
+    "counts": {
+      "passedTests": 1,
+      "failedTests": 0,
+      "skippedTests": 0,
+      "totalTestCount": 1
+    },
+    "exit_code": 0,
+    "source_changed": false,
+    "scope": [
+      "labelled light interaction and displayed On/Off",
+      "displayed1.0 and3.0 zoom endpoint gestures",
+      "Home/reentry, minimum displayed zoom and control hittability"
+    ],
+    "limits": [
+      "one-decimal AX text is not exact numeric/optical measurement",
+      "minimum reentry cannot prove nondefault zoom preservation"
+    ]
+  },
+  "normal_release_recording": {
+    "raw_directory": "/private/tmp/mirror-physical-demo-1",
+    "receipt_sha256": "85646d85a34853cc809d9e619545b437b623a2244c7e0316393d55eb83410b45",
+    "log_sha256": "eb5a149721bbdd30ae9074201ce38cd765841900d614df22a2c5ec1e86799bcf",
+    "app_version_build": "1.0/17",
+    "started_at_utc": "2026-10-14T00:49:59.543106+00:00",
+    "finished_at_utc": "2026-10-14T00:50:32.722138+00:00",
+    "counts": {
+      "passedTests": 1,
+      "failedTests": 0,
+      "skippedTests": 0,
+      "totalTestCount": 1
+    },
+    "exit_code": 0,
+    "app_changed": false,
+    "test_changed": false,
+    "configuration": "local xctestrun keepAlways screenRecording and normal signed app path; no shipping-source change",
+    "media_uploaded": false
+  },
+  "review": {
+    "report": "../physical-ui-endpoint-review.md",
+    "disposition": "No material findings; passed for test-only integration and narrow UI evidence",
+    "original_private_report_sha256": "ed28fa8b1eed5c799a1693088068bad5236d40e588eeceae1241b76f831d50fe"
+  },
+  "temporary_probe_disposition": "Removed; clean worker8f6d2c5; no shipping camera fix justified",
+  "remaining_physical_gates": [
+    "Full manual VoiceOver and extended accessibility checks remain Pending; bounded three-type audit passed"
+  ],
+  "approval_gates": {
+    "media_upload": "Exact21.58s video approved for Apple; public screenshots not approved",
+    "final_submission": "Explicit user hold; complete update review required",
+    "media_review_policy": "Dock permitted; other apps outside dock forbidden; user reviews recording",
+    "manual_upload_plan": "User asked for attachments in Downloads and will upload them; no agent upload succeeded"
+  },
+  "preservation": "New media/raw phone results remain private in temporary /private/tmp; no cloud backup or publication claimed",
+  "user_physical_acceptance": {
+    "reported_all_four_worked": true,
+    "checks": [
+      "Written text reversed",
+      "Brightness increase and restoration on light-off/leaving",
+      "App-switcher card hides camera image",
+      "Settings revoke/regrant permission recovery"
+    ],
+    "evidence_level": "Direct user confirmation, not independent instrument measurement"
+  },
+  "physical_accessibility_audit": {
+    "worker_commit": "fa7b714c7cde3a9c0d114ddbd46b1de32e793b3a",
+    "integration_commit": "c38be86",
+    "ui_source_sha256": "78b5abc658091e237447c27a77401c2bee900f517eca1a488383d32eaf4bc221",
+    "receipt_sha256": "6acbc5c12c5b999bf8156ea6631f82cca42863eda27bc722d006349e8c406910",
+    "log_sha256": "28100d8ddb1e886687830f4b50c4936cab795d51cbebd71466be8217ae94cd4d",
+    "raw_directory": "/private/tmp/mirror-release-physical-a11y-1",
+    "counts": {
+      "passedTests": 1,
+      "failedTests": 0,
+      "skippedTests": 0,
+      "totalTestCount": 1
+    },
+    "exit_code": 0,
+    "source_changed": false,
+    "audit_types": [
+      "sufficientElementDescription",
+      "hitRegion",
+      "trait"
+    ],
+    "light_states": [
+      "Off",
+      "On"
+    ],
+    "issue_filter": "None; default handling",
+    "review": "../physical-a11y-review.md",
+    "limits": [
+      "action unavailable on iOS in official Xcode27 headers",
+      "manual VoiceOver/contrast/Dynamic Type/clipping not executed",
+      "cleanup is best effort; finalOff not asserted by this audit"
+    ]
+  },
+  "app_store_state": "Rejected, selected build1; no submission/reply sent. Description/Notes typed but unsaved. Auto-review blocked build-selection removal while user holds update.",
+  "manual_upload_delivery": {
+    "folder": "/Users/calvincheah/Downloads/Mirror-App-Store-Review-2026-10-13",
+    "files_checked": 13,
+    "checksum_manifest_sha256": "df8f4c5d073241534f963a8e34cc85f293f8df91f27c5f92a2caa6e58ffcfe2a",
+    "video_sha256": "9f4ee4e4a8a0096e21e6255209233f53660f359e3bb027aa7064cb48d4ced211",
+    "state": "Local delivery only; user will upload manually; final submission on hold"
+  }
+}
