@@ -2,7 +2,7 @@
 
 Destination: App Review for Just a Mirror!, app 6812883052, version 1.0. Submission 2d169b12-d15f-4314-ad0d-927792b4d650 asks for information and a physical-device recording under 2.1.
 
-Before sending: complete the physical camera/brightness/privacy checklist, inspect the genuine non-private recording, attach it, and verify that selected build 17 matches the qualified shipping source. Label the actual device OS; do not call iOS 27.2 public/stable. No account credentials are required. Do not copy the preparation instructions into the message.
+Before sending: finish the physical checklist and the user review of all media and the complete update. The user explicitly holds final submission; no final approval has been given. Dock footage is permitted; other apps outside the dock must not appear. The user approved the unchanged21.58-second recording for Apple. Public screenshot candidates and the complete update still require review. The user will upload the files manually from the requested Downloads folder; automated attachment upload did not succeed. Select matching build17 only as part of the reviewed update. The genuine normal Release recording and byte-identical copies are local in /private/tmp/mirror-release-evidence/submission-review; media-manifest.json binds every proposed file. Do not send raw XCTest diagnostics. No account credentials are required. Do not copy these preparation instructions into the message.
 
 ## Notes / reply text
 
@@ -14,7 +14,7 @@ Core functionality uses Apple's SwiftUI, UIKit and AVFoundation frameworks on th
 
 Functionality is consistent in every region where the app is offered; there are no region-specific feature gates or content. The app does not publish user-generated content or a third-party media catalog and does not provide medical, financial, gambling or other regulated services.
 
-The attached physical-device recording shows launch and the typical mirror, light and zoom flow. [Replace only after the recording is actually attached: device, actual OS, version/build, and recording filename.] There is no authentication, purchase or user-content flow to demonstrate.
+The physical-device recording Mirror-iPhone-1.0-17-demo.mp4 shows launch and the typical mirror, light and zoom flow. It was captured on an iPhone13Pro running iOS27.2 build24B5099f, with app version1.0 build17. There is no authentication, purchase or user-content flow to demonstrate.
 
 ## Product page description draft
 

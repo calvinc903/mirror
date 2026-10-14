@@ -10,7 +10,7 @@
 | REVIEW-1 | Independent implementation review and checkpoint audit | Passed | 56032c2 implementation; 366a20a supplemental records and preservation | [Audit](agent-reports/checkpoint-audit.md) | Coordinator: reopen review after material changes |
 | ENFORCE-1 | Effective PR/check/no-force protection | PR protection active; required checks Pending | Main PR/admin/no-force/no-delete policy read back | [Rule](agent-reports/github-protection-current.json) | Coordinator: authorized main integration, then activate/qualify required contexts |
 | HANDOFF-1 | Accurate checkpoint publication, gaps and next action | Passed | Setup installed locally and pushed in draft PR #1; current release checkpoint and results published in PR #2 | [Status](PROJECT_STATUS.md) | Coordinator: complete qualified main integration, then qualify required contexts |
-| DEVICE-1 | Real-device camera and brightness behavior | Pending | Current release attempt failed before bootstrap; zero physical passes | [Device checklist](DEVICE_CHECKLIST.md) | Coordinator: verify Mac/iPhone awake, execute actual device acceptance |
+| DEVICE-1 | Real-device camera and brightness behavior | Passed for exercised configuration | Actual physical UI attempt4 and normal Release17 demo each1/0/0; user confirmed four physical checks; selected accessibility audits passed | [Physical evidence](agent-reports/release/physical-ui-evidence.json) | Coordinator: extended manual VoiceOver remains Pending; keep evidence boundaries |
 
 Documentation validation and simulator compilation establish their named contracts only. Product behavior, human approval, server enforcement and schedules require their own evidence. Changed relevant inputs invalidate affected receipts. Keep local, committed, pushed and merged states distinct.
 
@@ -18,15 +18,15 @@ Documentation validation and simulator compilation establish their named contrac
 
 | ID | Contract | State | Evidence / next action |
 | --- | --- | --- | --- |
-| PROD-PERM-1 | Denial, Settings grant/revocation and safe re-entry | Pending | 14-unit suite and actual denial UI passed; physical Settings grant/revocation required |
-| PROD-CAMERA-1 | Mirrored preview, lifetime, failure/interruption recovery | Pending | Real driver/controller regression and simulator recovery UI passed; optical/device checks required |
-| PROD-LIGHT-1 | Correct edge light and user brightness restoration | Pending | Brightness regression passed in full 14-unit suite; physical screen checks required |
-| PROD-A11Y-1 | Accessible light/zoom controls | Pending | UI and visual checks required |
-| PROD-PRIVACY-1 | Immediate preview concealment, local-only processing | Pending | Source implementation; actual app-switcher/archive checks required |
-| PROD-TEST-1 | Full app tests and independent final review | Pending | 14 optimized unit tests, two simulator UI paths and independent shipping-source review passed; physical acceptance Pending |
-| PROD-CI-1 | Current hosted regressions and source binding | Passed | PR 38357124662 and push 38357117809 each 14/0/0 at reviewed 3e47a5f; raw artifacts/log/source hashes verified; [CI evidence](agent-reports/release/ci-evidence.json) |
-| RELEASE-1 | Matching signed App Store eligible candidate | Passed | Cloud17 from reviewed e353f43; uploaded 1.0/17 Validated / Ready to Submit; see [release evidence](agent-reports/release/evidence.json) |
-| REVIEW-INFO-1 | Physical demo and six Apple information items | Pending | User authorized non-private demo; locked-device attempt failed before bootstrap. Draft response saved; actual recording required |
-| SUBMIT-1 | Submitted matching qualified candidate | Pending | App Store status remains Rejected; submit only after readiness gates |
+| PROD-PERM-1 | Denial, Settings grant/revocation and safe re-entry | Passed | Automated denial/controller checks plus user-confirmed physical Settings revoke/regrant and preview recovery |
+| PROD-CAMERA-1 | Mirrored preview, lifetime, failure/interruption recovery | Passed for exercised configuration | Live captures and actual UI reentry; unit interruption/recovery checks; user-confirmed physical written-text reversal. Remote-viewing conflict preserved; no shipping camera defect established |
+| PROD-LIGHT-1 | Correct edge light and user brightness restoration | Passed | Unit and actual UI checks; user confirmed physical screen brightening and restoration on light-off/leaving |
+| PROD-A11Y-1 | Accessible light/zoom controls | Passed for bounded audits | Real-device labels/touch plus default description, hit-region and trait audits passed in light Off/On states1/0/0; manual VoiceOver and extended checks remain Pending |
+| PROD-PRIVACY-1 | Immediate preview concealment, local-only processing | Passed | Source/archive checks and user-confirmed opaque physical app-switcher card; camera frames remain local |
+| PROD-TEST-1 | App tests and independent source review | Passed for bounded candidate | 14 optimized units, two simulator UI paths, physical UI1/0/0, physical accessibility audit1/0/0 and independent reviews passed; four direct physical checks confirmed by user |
+| PROD-CI-1 | Current hosted regressions and source binding | New test checkpoint Pending | Historical reviewed3e47a5f PR38357124662 and push38357117809 each14/0/0; new physical test additions compiled/executed locally but need current hosted result. [CI evidence](agent-reports/release/ci-evidence.json) |
+| RELEASE-1 | Matching signed App Store eligible candidate | Passed | Cloud 17 from reviewed e353f43; uploaded 1.0/17 Validated / Ready to Submit; see [release evidence](agent-reports/release/evidence.json) |
+| REVIEW-INFO-1 | Physical demo and six Apple information items | Pending; user review required | Genuine normal Release 17 device recording produced locally. User reviews recording; dock permitted and other apps outside dock forbidden. Show all proposed media/text, finish physical checklist and obtain user approval before uploading or submitting |
+| SUBMIT-1 | Submitted matching qualified candidate | Pending; explicit user hold | App Store remains Rejected with build 1 selected. User must review and approve final media/update before submission; qualified build 17 remains available |
 
 Current release evidence and private raw artifact pointers: [qualification report](agent-reports/release-readiness.md). Build readiness does not establish physical product readiness or App Store submission.
