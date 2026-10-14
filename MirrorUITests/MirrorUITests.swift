@@ -79,6 +79,36 @@ final class MirrorUITests: XCTestCase {
         #endif
     }
 
+    func testPhysicalCameraControlsAccessibilityAudit() throws {
+        #if targetEnvironment(simulator)
+        throw XCTSkip("Camera control accessibility audit requires a physical iPhone")
+        #else
+        let app = XCUIApplication()
+        app.launch()
+        respondToCameraAlert(allow: true)
+        let light = app.buttons["Mirror light"]
+        let zoom = app.sliders["Zoom"]
+        XCTAssertTrue(light.waitForExistence(timeout: 15), "Physical camera must start before auditing controls")
+        XCTAssertTrue(zoom.waitForExistence(timeout: 15), "Labelled zoom must be available for the audit")
+        XCTAssertTrue(light.isHittable)
+        XCTAssertTrue(zoom.isHittable)
+        XCTAssertEqual(light.value as? String, "Off")
+        defer {
+            if light.exists && light.isHittable && light.value as? String == "On" {
+                light.tap()
+            }
+        }
+
+        // The action audit is macOS-only in Xcode 27; these are the requested
+        // iPhone-supported types. Default handling records every audit finding.
+        let auditTypes: XCUIAccessibilityAuditType = [.sufficientElementDescription, .hitRegion, .trait]
+        try app.performAccessibilityAudit(for: auditTypes)
+        light.tap()
+        XCTAssertEqual(light.value as? String, "On")
+        try app.performAccessibilityAudit(for: auditTypes)
+        #endif
+    }
+
     private func dragZoomToEndpoint(_ zoom: XCUIElement, maximum: Bool,
                                     file: StaticString = #filePath, line: UInt = #line) {
         // On iOS 27 the normalized endpoint gesture can grab the broad thumb
