@@ -20,7 +20,7 @@ The app requires camera permission. The permission prompt uses `NSCameraUsageDes
 
 1. Open `Mirror.xcodeproj` in Xcode.
 2. Select the `Mirror` scheme.
-3. Choose a real iPhone or iPad for the best camera behavior.
+3. Choose a real iPhone for the best camera behavior.
 4. Build and run.
 
 Simulator camera behavior may not match a physical device.

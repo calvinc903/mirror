@@ -17,7 +17,7 @@ Local installation/preservation and the independent checkpoint audit passed. The
 
 The user subsequently authorized production readiness and an App Store publishing request. Release work includes the setup changes; PR #1 remains unmerged. Next: qualify and publish the release candidate through a reviewed PR. PR/no-force/admin protection is active. Required new check contexts remain Pending until the workflow is on `main`; activate the prepared policy and verify an ordinary main-based PR and both failure-blocking paths afterward.
 
-## Product gaps
+## Historical product gaps (superseded by the physical checkpoint below)
 
 - Physical-device permission, mirroring, lighting, zoom and brightness-restoration checks are Pending; owner: coordinator; next: assign the [device checklist](DEVICE_CHECKLIST.md) with a device lease when product changes require it.
 - Focused XCTest and UI test targets now exist. Product qualification still requires actual executed checks.
@@ -45,7 +45,7 @@ The independent xhigh release [checkpoint audit](agent-reports/release-checkpoin
 
 The fresh independent xhigh [current checkpoint audit](agent-reports/release-audit-current.md) verified source/evidence/recovery copies and found no new shipping blocker. Its two handoff wording findings were corrected. Current CI artifacts and the full audit/review reports are also preserved privately in `current-hosted-and-audit-evidence.tar.gz`; see the CI evidence manifest. Final handoff record edits do not change qualified app/test inputs.
 
-## Current physical checkpoint — October 13 evening
+## Physical qualification history — October 13 evening
 
 The actual iPhone 13 Pro runs iOS 27.2 build 24B5099f and devicectl reports localNetwork transport. Physical attempt2 failed a normalized slider reset (displayed 1.2 rather than 1.0) while Device Hub View Screen was active; its camera captures were black. Temporary local Debug probes subsequently measured an active preview layer, connected/enabled/active camera connection, running session, visible geometry and hidden opaque cover. No shipping camera defect was established by those measurements. The probes were removed without a shipping-source change.
 
@@ -62,3 +62,11 @@ A separate physical-only accessibility test is integrated as c38be86. Default su
 Current handoff: user requested an attachment folder in Downloads and will upload the files themselves. No agent video upload succeeded. Automated review rejected broad native Chrome inspection (unrelated private content) and removing the selected App Store build while the user holds the update. Version1.0 remains Rejected with build1 selected. Description and Notes are typed but unsaved; no reply, Update Review or Resubmit action was sent. Complete local review package is ready; public screenshot candidates require user review, and final submission remains on hold. Original primary Git synchronization and reviewed main integration/protection remain unfinished.
 
 Manual-upload delivery completed in /Users/calvincheah/Downloads/Mirror-App-Store-Review-2026-10-13:13 files copied and byte-checked, including the approved unchanged video, public screenshot candidates, portable Review.html and upload instructions. Video SHA2569f4ee4e4a8a0096e21e6255209233f53660f359e3bb027aa7064cb48d4ced211. Delivery is local; it does not prove any Apple upload or submission.
+
+## Current submission checkpoint — October 13, 2026, 10:12 PM EDT
+
+The user reviewed the complete media/text package and explicitly authorized submission, including replacing draft build1 with tested build17. The coordinator selected and saved build17, uploaded the unchanged approved video, saved the reviewed Description/Notes, and replaced the old city mockup with AppStore-1x.jpg and AppStore-3x.jpg. Each selected asset/build was verified after reload. The same reviewed six-item information and approved video were sent in the App Review conversation. Resubmit to App Review completed: the submission now shows Waiting for Review for1.0(17), verified after reload. This supersedes every earlier hold, unsaved-field and no-upload statement above; those are historical attempt records. Apple approval and actual public availability are Pending. Automatic release after approval remains selected.
+
+Current PR38496795139 and push38496791159 artifacts independently verify source-bound compile and14/0/0 unit results; all shipping files still match validated Cloud17 sourcee353f43. Fresh independent xhigh [final audit](agent-reports/release-final-submission-audit.md) found no new shipping/product blocker. Manual VoiceOver/extended accessibility and other device/OS configurations remain unexecuted, not certified.
+
+Reviewed PR#2 merged through the ordinary protected PR path at14b929e83e959ea404c63283bc51ed7bdbd220a3. The public support repository now describes iPhone/iOS27 and digital zoom; the privacy policy renders and matches local-only data flow. Required-check activation and server enforcement qualification remain Pending; PR/admin/no-force/no-delete protections remain active. Original Documents checkout and iCloud Git restoration/synchronization remain untouched; all release work is in the fully local clone. See [submission receipt](agent-reports/release/app-store-submission.json). No Mac camera was used.

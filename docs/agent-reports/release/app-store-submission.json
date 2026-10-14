@@ -1,0 +1,12 @@
+{
+  "app": "Just a Mirror!",
+  "version": "1.0",
+  "build": "17",
+  "date": "2026-10-13",
+  "status": "Waiting for Review",
+  "verification": "Coordinator verified matching version/build after reload",
+  "user_approved": true,
+  "apple_approval": "Pending",
+  "public_availability": "Pending",
+  "required_check_enforcement": "Pending"
+}
