@@ -1,8 +1,8 @@
-# App Review response draft — not sent
+# App Review response — sent
 
 Destination: App Review for Just a Mirror!, app 6812883052, version 1.0. Submission 2d169b12-d15f-4314-ad0d-927792b4d650 asks for information and a physical-device recording under 2.1.
 
-Before sending: finish the physical checklist and the user review of all media and the complete update. The user explicitly holds final submission; no final approval has been given. Dock footage is permitted; other apps outside the dock must not appear. The user approved the unchanged21.58-second recording for Apple. Public screenshot candidates and the complete update still require review. The user will upload the files manually from the requested Downloads folder; automated attachment upload did not succeed. Select matching build17 only as part of the reviewed update. The genuine normal Release recording and byte-identical copies are local in /private/tmp/mirror-release-evidence/submission-review; media-manifest.json binds every proposed file. Do not send raw XCTest diagnostics. No account credentials are required. Do not copy these preparation instructions into the message.
+Sent to Apple on October13,2026 at10:11PM EDT after the user reviewed and approved all media/text and explicitly authorized selecting build17 and submission. The unchanged approved physical video is attached both to App Review Information and the review-conversation reply. Reviewed Description/Notes and the two public screenshots were saved and reloaded. Resubmission1.0(17) now shows Waiting for Review. The following preparation text was not included in the sent message. See [receipt](agent-reports/release/app-store-submission.json).
 
 ## Notes / reply text
 
