@@ -62,21 +62,42 @@ final class MirrorUITests: XCTestCase {
         let zoom = app.sliders["Zoom"]
         XCTAssertTrue(zoom.isHittable)
         XCTAssertEqual(zoom.value as? String, "1.0 times")
-        zoom.adjust(toNormalizedSliderPosition: 1)
-        XCTAssertEqual(zoom.value as? String, "3.0 times")
+        dragZoomToEndpoint(zoom, maximum: true)
         retainScreenshot(app, name: "Physical mirror at 3x with light on")
-        zoom.adjust(toNormalizedSliderPosition: 0)
-        XCTAssertEqual(zoom.value as? String, "1.0 times")
+        dragZoomToEndpoint(zoom, maximum: false)
         XCUIDevice.shared.press(.home)
         app.activate()
         XCTAssertTrue(light.waitForExistence(timeout: 15))
         XCTAssertEqual(light.value as? String, "On")
+        XCTAssertTrue(zoom.isHittable, "Zoom must remain usable after camera reentry")
+        XCTAssertEqual(zoom.value as? String, "1.0 times", "Reentry must preserve the selected minimum zoom")
         light.tap()
         XCTAssertEqual(light.value as? String, "Off")
         retainScreenshot(app, name: "Physical mirror after reentry")
         // Pixel mirroring, optical image quality, actual brightness restoration
         // and app-switcher privacy still require the coordinator's device QA.
         #endif
+    }
+
+    private func dragZoomToEndpoint(_ zoom: XCUIElement, maximum: Bool,
+                                    file: StaticString = #filePath, line: UInt = #line) {
+        // On iOS 27 the normalized endpoint gesture can grab the broad thumb
+        // off-center and stop at 1.2x/2.9x. Center it first, then drag beyond the
+        // track so the real control clamps to its endpoint despite that offset.
+        zoom.adjust(toNormalizedSliderPosition: 0.5)
+        let frame = zoom.frame
+        let center = zoom.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5))
+        let edge = zoom.coordinate(withNormalizedOffset: CGVector(dx: maximum ? 1 : 0, dy: 0.5))
+        let destination = edge.withOffset(CGVector(dx: (maximum ? 1 : -1) * frame.height / 2, dy: 0))
+        center.press(forDuration: 0.25, thenDragTo: destination)
+
+        let expected = maximum ? "3.0 times" : "1.0 times"
+        let settled = XCTNSPredicateExpectation(predicate: NSPredicate(format: "value == %@", expected), object: zoom)
+        XCTAssertEqual(XCTWaiter.wait(for: [settled], timeout: 3), .completed,
+                       "Zoom endpoint drag must reach \(expected); observed \(String(describing: zoom.value)), frame \(frame)",
+                       file: file, line: line)
+        XCTAssertEqual(zoom.value as? String, expected, "Zoom must remain at the exact endpoint after settling",
+                       file: file, line: line)
     }
 
     private func retainScreenshot(_ app: XCUIApplication, name: String) {
