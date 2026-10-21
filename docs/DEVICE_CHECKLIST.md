@@ -13,3 +13,9 @@ For camera/lifecycle/lighting product changes, check these contracts on an actua
 7. Check control accessibility labels, touch interaction and relevant VoiceOver behavior for visible UI changes.
 
 A simulator build checks compilation. A signed archive checks distribution inputs. Neither establishes these device outcomes. Mark each unrun item Pending with an owner and next step; preserve reproducers and failures.
+
+## Camera troubleshooting preflight
+
+Before evaluating a black preview, stop screen sharing in every running Device Hub instance, including separate stable and beta Xcode installations. Each instance's More Actions menu may independently offer Stop Screen Sharing. Verify that the selected physical phone shows View Screen and no live stream in each instance, then close/reopen Mirror directly on the phone. Do not turn viewing back on to judge the camera; it can recreate the conflict. The October21 new-phone report recovered after both streams stopped. This is an environment preflight, not a replacement for investigating failures that persist with all sharing off.
+
+For sideways preview, hold the phone upright, check upright framing and reversed text, go Home, and reopen. Keep the interface portrait-only; use the actual camera's portrait rotation rather than a model-specific constant. Record the installed build and direct device outcome. Additional device models and unexecuted checks remain Pending.

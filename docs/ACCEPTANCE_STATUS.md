@@ -30,3 +30,9 @@ Documentation validation and simulator compilation establish their named contrac
 | SUBMIT-1 | Submitted matching qualified candidate | Pending; explicit user hold | App Store remains Rejected with build 1 selected. User must review and approve final media/update before submission; qualified build 17 remains available |
 
 Current release evidence and private raw artifact pointers: [qualification report](agent-reports/release-readiness.md). Build readiness does not establish physical product readiness or App Store submission.
+
+## October21 developer correction
+
+- ORIENT-18: Passed for the exercised iPhone18Pro path. Developer build18 installed; user confirmed upright portrait preview before and after Home/reentry. This does not establish old-phone or broader-device regression coverage.
+- REVIEW-ORIENT: Fresh independent source review passed for c2547260; signed build/strict signature and installation verification passed. Seventeen document checks and fifteen tooling regressions passed.
+- Optical screenshots/new media: not captured; private local fix only. No visual proof or new App Store release is claimed. Simulator unit execution and hosted checks are recorded separately in the correction report; do not infer them from compilation or the user's orientation check.
