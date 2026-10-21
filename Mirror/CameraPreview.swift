@@ -21,6 +21,7 @@ struct SelfieCameraView: UIViewRepresentable {
 final class CameraPreviewView: UIView {
     private let privacyCover = UIView()
     private var inactivityObserver: NSObjectProtocol?
+    private var rotationCoordinator: AVCaptureDevice.RotationCoordinator?
     override class var layerClass: AnyClass { AVCaptureVideoPreviewLayer.self }
     private var previewLayer: AVCaptureVideoPreviewLayer { layer as! AVCaptureVideoPreviewLayer }
     override init(frame: CGRect) {
@@ -51,7 +52,10 @@ final class CameraPreviewView: UIView {
         applyConnection()
         privacyCover.isHidden = visible && UIApplication.shared.applicationState == .active
     }
-    func disconnect() { previewLayer.session = nil }
+    func disconnect() {
+        previewLayer.session = nil
+        rotationCoordinator = nil
+    }
     private func applyConnection() {
         // Configuration is asynchronous; reapply after running/update/layout when it exists.
         guard let connection = previewLayer.connection else { return }
@@ -59,6 +63,14 @@ final class CameraPreviewView: UIView {
             connection.automaticallyAdjustsVideoMirroring = false
             connection.isVideoMirrored = true
         }
-        if connection.isVideoRotationAngleSupported(90) { connection.videoRotationAngle = 90 }
+        guard let input = connection.inputPorts.first(where: { $0.mediaType == .video })?.input as? AVCaptureDeviceInput else { return }
+        if rotationCoordinator?.device !== input.device {
+            rotationCoordinator = AVCaptureDevice.RotationCoordinator(device: input.device, previewLayer: previewLayer)
+        }
+        // The interface is portrait-locked; sensor mounting differs between cameras.
+        // Use its static portrait angle so tilting the phone does not rotate the mirror.
+        guard let angle = rotationCoordinator?.videoRotationAngleRelative(toDeviceOrientation: .portrait),
+              connection.isVideoRotationAngleSupported(angle) else { return }
+        connection.videoRotationAngle = angle
     }
 }
