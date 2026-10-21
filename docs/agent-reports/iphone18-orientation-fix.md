@@ -10,6 +10,6 @@ Validation: normal signed Release developer build18 passed with unchanged frozen
 
 Distinct environment issue: Two Device Hub screen streams were active. Stopping both and reopening restored live preview according to the user. Future optical checks must inspect every running stable/beta instance and keep sharing off. Failures that persist without sharing need separate investigation.
 
-Preserved failed checks: worker's sandboxed full compile failed in existing Swift macro-server startup; root's authorized normal signed build succeeded. The first simulator regression attempt compiled but failed during simulator service bootstrap before executing tests; logs/receipt remain private. A matching stable Xcode retry was started. Its actual outcome must be recorded before promoting the current unit gate.
+Preserved failed checks: worker's sandboxed full compile failed in existing Swift macro-server startup; root's authorized normal signed build succeeded. The first simulator regression attempt compiled but failed during simulator service bootstrap before executing tests; logs/receipt remain private. The matching stable Xcode27.0 retry completed14/0/0 with no source drift; raw result bundle and every frozen input hash were verified. This is unit regression evidence, not simulator proof of physical optics.
 
-State: code committed locally; developer build installed. User-confirmed orientation fix passed for the new phone. Publication/hosted CI and broader production qualification are separate.
+State: code committed locally; developer build installed. User-confirmed orientation fix passed for the new phone. The fix and report are pushed in draft PR#4. Hosted CI and broader production qualification remain separate.

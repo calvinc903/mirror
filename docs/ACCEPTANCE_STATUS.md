@@ -35,4 +35,4 @@ Current release evidence and private raw artifact pointers: [qualification repor
 
 - ORIENT-18: Passed for the exercised iPhone18Pro path. Developer build18 installed; user confirmed upright portrait preview before and after Home/reentry. This does not establish old-phone or broader-device regression coverage.
 - REVIEW-ORIENT: Fresh independent source review passed for c2547260; signed build/strict signature and installation verification passed. Seventeen document checks and fifteen tooling regressions passed.
-- Optical screenshots/new media: not captured; private local fix only. No visual proof or new App Store release is claimed. Simulator unit execution and hosted checks are recorded separately in the correction report; do not infer them from compilation or the user's orientation check.
+- Optical screenshots/new media: not captured; private local fix only. No visual proof or new App Store release is claimed. Stable Xcode27.0 simulator units passed14/0/0 with no source drift; raw results and hashes verified. Hosted checks retain their own state.
